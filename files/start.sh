@@ -24,7 +24,7 @@ if [ "$USE_SSL" = "1" ]; then
     " /etc/nginx/conf.d/default.conf
 
     if [ "${DHPARAMS}" = "1" ]; then
-      openssl dhparam -dsaparam -out /etc/nginx/dhparam.pem 4096
+      openssl dhparam -dsaparam -out /etc/nginx/dhparams.pem 4096
       sed -i "s|###DHPARAMS ||g;
       " /etc/nginx/conf.d/default.conf
     fi
