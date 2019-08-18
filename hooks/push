@@ -1,0 +1,9 @@
+#!/bin/bash
+
+php_version=$(awk '/^FROM php:/{ gsub(/^FROM php:|-.*/, ""); print; exit}' "${DOCKERFILE_PATH}")
+rainloop_version=$(awk '/^ENV RAINLOOP_VERSION=/{ sub(/.*=/, ""); print; exit}' "${DOCKERFILE_PATH}")
+
+image_name=waldner/rainloop:${rainloop_version}-php${php_version}
+
+docker tag $IMAGE_NAME $DOCKER_REPO:${rainloop_version}-php${php_version}
+docker push $DOCKER_REPO:${rainloop_version}-php${php_version}

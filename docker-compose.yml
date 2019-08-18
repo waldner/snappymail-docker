@@ -1,0 +1,18 @@
+version: "3.3"
+
+services:
+  rainloop:
+    image: waldner/rainloop:1.13.0-php7.3.8
+    container_name: rainloop
+    hostname: rainloop
+    restart: always
+    volumes:
+      - ${WEBMAIL_DATA}:/rainloop/data
+    ports:
+      - ${EXTERNAL_HTTP_PORT:-80}:80
+    environment:
+      - TZ=${TZ:-UTC}
+      - USE_SSL=${USE_SSL:-0}
+      - HTTP_AUTH_USER=${HTTP_AUTH_USER:-}
+      - HTTP_AUTH_PASS=${HTTP_AUTH_PASS:-}
+

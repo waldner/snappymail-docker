@@ -1,0 +1,11 @@
+version: "3.3"
+
+services:
+  rainloop:
+    ports:
+      - ${EXTERNAL_HTTPS_PORT:-443}:443
+    volumes:
+      - ${LOCAL_SSL_CERT}:/etc/nginx/server.crt
+      - ${LOCAL_SSL_KEY}:/etc/nginx/server.key
+    environment:
+      EXTERNAL_HTTPS_PORT: ${EXTERNAL_HTTPS_PORT:-443}
