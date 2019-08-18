@@ -13,6 +13,8 @@ RUN apk --no-cache --update add nginx bash ca-certificates supervisor tzdata lib
 \
     && mkdir /rainloop \
     && unzip -q /tmp/rainloop.zip -d /rainloop \
+    && find /rainloop -type d -exec chmod 755 {} + \
+    && find /rainloop -type f -exec chmod 644 {} + \
     && ln -sf /dev/stdout /tmp/nginx_access.log \
     && ln -sf /dev/stderr /tmp/nginx_error.log \
     && openssl dhparam -dsaparam -out /etc/nginx/dhparam.pem 4096
