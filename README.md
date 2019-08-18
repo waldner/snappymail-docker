@@ -55,6 +55,10 @@ LOCAL_SSL_KEY=/path/to/server.key
 # only used if USE_SSL=1
 EXTERNAL_HTTPS_PORT=8443
 
+# optional: whether to generate and use a custom dhparams.pem file at startup (default: 1)
+# this may make the boot process longer
+DHPARAMS=0
+
 ```
 
 - If you want to use SSL (`USE_SSL=1`) and thus assigned values to `LOCAL_SSL_CERT` and `LOCAL_SSL_KEY` (and possibly `EXTERNAL_HTTPS_PORT`): create a `docker-compose.override.yml` in the same directory with the following content (or, if you cloned the repo, just run `cp docker-compose.override.yml.sample docker-compose.override.yml`):
@@ -71,6 +75,7 @@ services:
       - ${LOCAL_SSL_KEY}:/etc/nginx/server.key
     environment:
       EXTERNAL_HTTPS_PORT: ${EXTERNAL_HTTPS_PORT:-443}
+      DHPARAMS: ${DHPARAMS:-1}
 ```
 
 - Run the image with `docker-compose up -d`

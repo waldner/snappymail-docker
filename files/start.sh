@@ -22,6 +22,12 @@ if [ "$USE_SSL" = "1" ]; then
             s|###SSL_KEY###|${SSL_KEY}|g;
             s|###EXTERNAL_HTTPS_PORT###|${EXTERNAL_HTTPS_PORT}|g;
     " /etc/nginx/conf.d/default.conf
+
+    if [ "${DHPARAMS}" = "1" ]; then
+      openssl dhparam -dsaparam -out /etc/nginx/dhparam.pem 4096
+      sed -i "s|###DHPARAMS ||g;
+      " /etc/nginx/conf.d/default.conf
+    fi
   fi
 fi
 
@@ -37,9 +43,6 @@ sed -i "s|###LISTEN_PORT###|${LISTEN_PORT}|g;
         s|###LISTEN_SSL###|${LISTEN_SSL}|g;
        " /etc/nginx/conf.d/default.conf
 
-openssl dhparam -dsaparam -out /etc/nginx/dhparam.pem 4096
-
 mkdir -p /run/nginx
-
 exec /usr/bin/supervisord -n -c /etc/supervisord.conf
 

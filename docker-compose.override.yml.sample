@@ -9,3 +9,4 @@ services:
       - ${LOCAL_SSL_KEY}:/etc/nginx/server.key
     environment:
       EXTERNAL_HTTPS_PORT: ${EXTERNAL_HTTPS_PORT:-443}
+      DHPARAMS: ${DHPARAMS:-1}
