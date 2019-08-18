@@ -75,6 +75,20 @@ services:
 
 - Run the image with `docker-compose up -d`
 
+### Getting started
+
+If you're starting from scratch, make sure the the directory used for `$WEBMAIL_DATA` has the necessary permissions for rainloop's web user; in practice, it means it has to be owned by user and group **82**, otherwise you'll get permission errors:
+
+```
+# chown -R 82:82 /path/to/rainloop/data
+```
+
+As explained in [the docs](https://www.rainloop.net/docs/configuration/), to perform the initial configuration you have to go to `http[s]://your.domain.tld:yourport/?admin`. The initial username/password (*which you should change immediately*) is `admin/12345`.
+
+Many settings can be configured from the administration interface; for some others you'll have to edit the configuration file (`application.ini`, located inside the data directory) by hand.
+
+In particular, if you need to use **cram-md5** authentication with some IMAP or SMTP server, see [this page in the wiki](https://github.com/RainLoop/rainloop-webmail/wiki/How-to-enable-CRAM-MD5-for-IMAP-and-or-SMTP).
+
 ### Miscellaneous
 
 - When using SSL, all incoming requests to `$HTTP_EXTERNAL_PORT` are redirected to the HTTPS version of the page on port `$HTTPS_EXTERNAL_PORT`.
