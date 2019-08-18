@@ -37,6 +37,8 @@ sed -i "s|###LISTEN_PORT###|${LISTEN_PORT}|g;
         s|###LISTEN_SSL###|${LISTEN_SSL}|g;
        " /etc/nginx/conf.d/default.conf
 
+openssl dhparam -dsaparam -out /etc/nginx/dhparam.pem 4096
+
 mkdir -p /run/nginx
 
 exec /usr/bin/supervisord -n -c /etc/supervisord.conf
