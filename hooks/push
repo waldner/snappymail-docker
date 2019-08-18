@@ -7,3 +7,4 @@ image_name=waldner/rainloop:${rainloop_version}-php${php_version}
 
 docker tag $IMAGE_NAME $DOCKER_REPO:${rainloop_version}-php${php_version}
 docker push $DOCKER_REPO:${rainloop_version}-php${php_version}
+docker push $DOCKER_REPO:latest
