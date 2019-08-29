@@ -43,6 +43,9 @@ sed -i "s|###LISTEN_PORT###|${LISTEN_PORT}|g;
         s|###LISTEN_SSL###|${LISTEN_SSL}|g;
        " /etc/nginx/conf.d/default.conf
 
+# set correct ownership for data dir
+chown -R www-data:www-data /rainloop/data
+
 mkdir -p /run/nginx
 exec /usr/bin/supervisord -n -c /etc/supervisord.conf
 
