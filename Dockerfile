@@ -1,4 +1,4 @@
-FROM php:7.3.11-fpm-alpine3.10
+FROM php:7.4.4-fpm-alpine3.11
 
 ENV RAINLOOP_VERSION=1.14.0
 
