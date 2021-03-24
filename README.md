@@ -15,7 +15,7 @@ version: "3.3"
 
 services:
   rainloop:
-    image: waldner/rainloop:1.14.0-php7.4.4
+    image: waldner/rainloop:1.15.0-php7.4.16
     container_name: rainloop
     hostname: rainloop
     volumes:

@@ -1,6 +1,6 @@
-FROM php:7.4.4-fpm-alpine3.11
+FROM php:7.4.16-fpm-alpine3.13
 
-ENV RAINLOOP_VERSION=1.14.0
+ENV RAINLOOP_VERSION=1.15.0
 
 RUN apk --no-cache --update add nginx bash ca-certificates supervisor tzdata libpq \
     && apk --no-cache --update --virtual builddeps add postgresql-dev \
