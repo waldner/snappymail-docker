@@ -2,9 +2,9 @@
 
 ### What's this?
 
-`Dockerfile` and compose file to run the [rainloop](https://www.rainloop.net) webmail client.
+`Dockerfile` and compose file to run the [snappymail](https://snappymail.eu) webmail client.
 
-The image lives at [Docker hub](https://hub.docker.com/r/waldner/rainloop).
+The image lives at [Docker hub](https://hub.docker.com/r/waldner/snappymail).
 
 ### Using the image
 
@@ -14,12 +14,12 @@ The image lives at [Docker hub](https://hub.docker.com/r/waldner/rainloop).
 version: "3.3"
 
 services:
-  rainloop:
-    image: waldner/rainloop:1.15.0-php7.4.16
-    container_name: rainloop
-    hostname: rainloop
+  snappymail:
+    image: waldner/snappymail:2.29.1-php8.2.10
+    container_name: snappymail
+    hostname: snappymail
     volumes:
-      - ${WEBMAIL_DATA}:/rainloop/data
+      - ${WEBMAIL_DATA}:/snappymail/data
     ports:
       - ${EXTERNAL_HTTP_PORT:-80}:80
     environment:
@@ -31,7 +31,7 @@ services:
 
 ```
 # mandatory: where the data volume for rainloop is in the host filesystem
-WEBMAIL_DATA=/path/to/rainloop/data
+WEBMAIL_DATA=/path/to/snappymail/data
 
 # optional: if you want HTTP auth, put credentials in here,
 # otherwise don't define these two variables
@@ -67,7 +67,7 @@ DHPARAMS=0
 version: "3.3"
 
 services:
-  rainloop:
+  snappymail:
     ports:
       - ${EXTERNAL_HTTPS_PORT:-443}:443
     volumes:
@@ -78,15 +78,11 @@ services:
       DHPARAMS: ${DHPARAMS:-1}
 ```
 
-- Run the image with `docker-compose up -d`
+- Run the image with `docker compose up -d`
 
 ### Getting started
 
-As explained in [the docs](https://www.rainloop.net/docs/configuration/), to perform the initial configuration you have to go to `http[s]://your.domain.tld:yourport/?admin`. The initial username/password (*which you should change immediately*) is `admin/12345`.
-
-Many settings can be configured from the administration interface; for some others you'll have to edit the configuration file (`application.ini`, located inside the data directory) by hand.
-
-In particular, if you need to use **cram-md5** authentication with some IMAP or SMTP server, see [this page in the wiki](https://github.com/RainLoop/rainloop-webmail/wiki/How-to-enable-CRAM-MD5-for-IMAP-and-or-SMTP).
+As explained in [the docs](https://github.com/the-djmaze/snappymail/wiki/Installation-instructions#now-access-the-admin-page), to perform the initial configuration you have to go to `http[s]://your.domain.tld:yourport/?admin` and follow the instruction in the wiki page. The initial username is `admin`, the initial password is in `/var/www/webmail/data/_data_/_default_/admin_password.txt` (inside the container).
 
 ### Miscellaneous
 

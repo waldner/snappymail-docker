@@ -1,13 +1,13 @@
 version: "3.3"
 
 services:
-  rainloop:
-    image: waldner/rainloop:1.15.0-php7.4.16
-    container_name: rainloop
-    hostname: rainloop
+  snappymail:
+    image: waldner/snappymail:2.29.1-php8.2.10
+    container_name: snappymail
+    hostname: snappymail
     restart: always
     volumes:
-      - ${WEBMAIL_DATA}:/rainloop/data
+      - ${WEBMAIL_DATA}:/snappymail/data
     ports:
       - ${EXTERNAL_HTTP_PORT:-80}:80
     environment:

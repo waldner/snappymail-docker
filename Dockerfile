@@ -1,25 +1,33 @@
-FROM php:7.4.16-fpm-alpine3.13
+FROM php:8.2.10-fpm-alpine3.18
 
-ENV RAINLOOP_VERSION=1.15.0
+ENV SNAPPYMAIL_VERSION=2.29.1
+
+#    && docker-php-ext-install -j$(nproc) mbstring \
+#    && docker-php-ext-install -j$(nproc) dom \
+#    && docker-php-ext-install -j$(nproc) curl \
+#    && docker-php-ext-install -j$(nproc) exif \
+#    && docker-php-ext-install -j$(nproc) pdo_mysql \
+#    && docker-php-ext-install -j$(nproc) sodium \
+#    && docker-php-ext-install -j$(nproc) zip \
+#\
+
+#    && find /snappymail -type d -exec chmod 755 {} + \
+#    && find /snappymail -type f -exec chmod 644 {} + \
 
 RUN apk --no-cache --update add nginx bash ca-certificates supervisor tzdata libpq \
     && apk --no-cache --update --virtual builddeps add postgresql-dev \
 \
-    && docker-php-ext-install -j$(nproc) pdo_pgsql \
-    && docker-php-ext-install -j$(nproc) pdo_mysql \
 \
-    && curl -s -L -o /tmp/rainloop.zip "https://github.com/RainLoop/rainloop-webmail/releases/download/v${RAINLOOP_VERSION}/rainloop-${RAINLOOP_VERSION}.zip" \
+    && curl -s -L -o /tmp/snappymail.zip "https://github.com/the-djmaze/snappymail/releases/download/v${SNAPPYMAIL_VERSION}/snappymail-${SNAPPYMAIL_VERSION}.zip" \
     && apk del builddeps \
 \
-    && mkdir /rainloop \
-    && unzip -q /tmp/rainloop.zip -d /rainloop \
-    && find /rainloop -type d -exec chmod 755 {} + \
-    && find /rainloop -type f -exec chmod 644 {} + \
+    && mkdir /snappymail \
+    && unzip -q /tmp/snappymail.zip -d /snappymail \
     && ln -sf /dev/stdout /tmp/nginx_access.log \
     && ln -sf /dev/stderr /tmp/nginx_error.log 
 
 COPY files/listener.py /listener.py
-COPY files/nginx_site.conf /etc/nginx/conf.d/default.conf
+COPY files/nginx_site.conf /etc/nginx/http.d/default.conf
 COPY files/supervisord.conf /etc/supervisord.conf
 COPY files/start.sh /
 RUN chmod +x /start.sh
