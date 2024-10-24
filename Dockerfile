@@ -1,6 +1,6 @@
-FROM php:8.2.10-fpm-alpine3.18
+FROM php:8.3.12-fpm-alpine3.20
 
-ENV SNAPPYMAIL_VERSION=2.29.1
+ENV SNAPPYMAIL_VERSION=2.38.2
 
 #    && docker-php-ext-install -j$(nproc) mbstring \
 #    && docker-php-ext-install -j$(nproc) dom \
@@ -25,6 +25,9 @@ RUN apk --no-cache --update add nginx bash ca-certificates supervisor tzdata lib
     && unzip -q /tmp/snappymail.zip -d /snappymail \
     && ln -sf /dev/stdout /tmp/nginx_access.log \
     && ln -sf /dev/stderr /tmp/nginx_error.log 
+
+
+# RUN mv "$PHP_INI_DIR/php.ini-production" "$PHP_INI_DIR/php.ini"
 
 COPY files/listener.py /listener.py
 COPY files/nginx_site.conf /etc/nginx/http.d/default.conf

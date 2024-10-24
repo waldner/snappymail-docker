@@ -41,12 +41,18 @@ fi
 sed -i "s|###LISTEN_PORT###|${LISTEN_PORT}|g;
         s|###LISTEN_HTTP2###|${LISTEN_HTTP2}|g;
         s|###LISTEN_SSL###|${LISTEN_SSL}|g;
+        s|###UPLOAD_MAX_SIZE###|${UPLOAD_MAX_SIZE}|g;
        " /etc/nginx/http.d/default.conf
 
 # set correct ownership for data dir
 chown -R www-data:www-data /snappymail/data
 
 cat /etc/nginx/http.d/default.conf
+
+{
+echo "post_max_size=${UPLOAD_MAX_SIZE}";
+echo "upload_max_filesize=${UPLOAD_MAX_SIZE}";
+} > $PHP_INI_DIR/conf.d/upload-limits.ini
 
 mkdir -p /run/nginx
 exec /usr/bin/supervisord -n -c /etc/supervisord.conf

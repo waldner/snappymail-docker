@@ -1,4 +1,4 @@
-# rainloop-docker
+# snappymail-docker
 
 ### What's this?
 
@@ -11,11 +11,9 @@ The image lives at [Docker hub](https://hub.docker.com/r/waldner/snappymail).
 - If you cloned the github repository, skip this step. Otherwise create a file `docker-compose.yml` with the following content:
 
 ```
-version: "3.3"
-
 services:
   snappymail:
-    image: waldner/snappymail:2.29.1-php8.2.10
+    image: ghcr.io/waldner/snappymail-docker:latest
     container_name: snappymail
     hostname: snappymail
     volumes:
@@ -25,6 +23,9 @@ services:
     environment:
       - TZ=${TZ:-UTC}
       - USE_SSL=${USE_SSL:-0}
+      - HTTP_AUTH_USER=${HTTP_AUTH_USER:-}
+      - HTTP_AUTH_PASS=${HTTP_AUTH_PASS:-}
+      - UPLOAD_MAX_SIZE=${UPLOAD_MAX_SIZE:-10m}
 ```
 
 - Create a file named `.env` (in the same place where you put the `docker-compose.yml` file) with the following content:
@@ -32,6 +33,9 @@ services:
 ```
 # mandatory: where the data volume for rainloop is in the host filesystem
 WEBMAIL_DATA=/path/to/snappymail/data
+
+# optional: maximum attachment/upload size, default 10m
+UPLOAD_MAX_SIZE=20m
 
 # optional: if you want HTTP auth, put credentials in here,
 # otherwise don't define these two variables
@@ -64,8 +68,6 @@ DHPARAMS=0
 - If you want to use SSL (`USE_SSL=1`) and thus assigned values to `LOCAL_SSL_CERT` and `LOCAL_SSL_KEY` (and possibly `EXTERNAL_HTTPS_PORT`): create a `docker-compose.override.yml` in the same directory with the following content (or, if you cloned the repo, just run `cp docker-compose.override.yml.sample docker-compose.override.yml`):
 
 ```
-version: "3.3"
-
 services:
   snappymail:
     ports:
@@ -82,7 +84,7 @@ services:
 
 ### Getting started
 
-As explained in [the docs](https://github.com/the-djmaze/snappymail/wiki/Installation-instructions#now-access-the-admin-page), to perform the initial configuration you have to go to `http[s]://your.domain.tld:yourport/?admin` and follow the instruction in the wiki page. The initial username is `admin`, the initial password is in `/var/www/webmail/data/_data_/_default_/admin_password.txt` (inside the container).
+As explained in [the docs](https://github.com/the-djmaze/snappymail/wiki/Installation-instructions#now-access-the-admin-page), to perform the initial configuration you have to go to `http[s]://your.domain.tld:yourport/?admin` and follow the instruction in the wiki page. The initial username is `admin`, the initial password is in `/snappymail/data/_data_/_default_/admin_password.txt` (inside the container).
 
 ### Miscellaneous
 

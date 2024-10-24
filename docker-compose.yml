@@ -1,8 +1,6 @@
-version: "3.3"
-
 services:
   snappymail:
-    image: waldner/snappymail:2.29.1-php8.2.10
+    image: ghcr.io/waldner/snappymail:latest
     container_name: snappymail
     hostname: snappymail
     restart: always
@@ -15,4 +13,5 @@ services:
       - USE_SSL=${USE_SSL:-0}
       - HTTP_AUTH_USER=${HTTP_AUTH_USER:-}
       - HTTP_AUTH_PASS=${HTTP_AUTH_PASS:-}
+      - UPLOAD_MAX_SIZE=${UPLOAD_MAX_SIZE:-10m}
 
