@@ -4,7 +4,7 @@
 
 `Dockerfile` and compose file to run the [snappymail](https://snappymail.eu) webmail client.
 
-The image lives at [Docker hub](https://hub.docker.com/r/waldner/snappymail).
+The image lives at [ghcr.io](https://github.com/waldner/snappymail-docker/pkgs/container/snappymail-docker).
 
 ### Using the image
 

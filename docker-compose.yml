@@ -1,6 +1,6 @@
 services:
   snappymail:
-    image: ghcr.io/waldner/snappymail:latest
+    image: ghcr.io/waldner/snappymail-docker:latest
     container_name: snappymail
     hostname: snappymail
     restart: always
